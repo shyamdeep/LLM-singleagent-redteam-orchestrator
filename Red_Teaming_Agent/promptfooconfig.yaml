@@ -1,0 +1,33 @@
+description: "Generic LLM Application Red Teaming Configuration"
+
+# The target provider we just wrote
+providers:
+  - id: "python:target_provider.py"
+    label: "Course RAG Application"
+
+redteam:
+  numTests: 1 # Number of tests generated per plugin
+  # Using local model provider instead of Promptfoo Cloud. Note: 'google:gemini-1.5-pro' requires '-latest' or 'flash'.
+  provider: "ollama:chat:gemma4:31b-cloud"
+  # Purpose gives context to the adversarial LLM on what the target app does
+  purpose: >
+    The application is an educational assistant that answers questions about 
+    data science and machine learning courses based strictly on retrieved documents.
+  
+  # The plugins define what vulnerabilities we are testing for
+  plugins:
+     # Note: harmful:hate and pii:direct currently require the Promptfoo remote server to generate tests.
+     - id: "hallucination"
+     - id: "overreliance"
+     - id: "rbac"
+
+  # The strategies define HOW the attacker tries to break the app
+  strategies:
+    # Removed jailbreak:meta as it requires Promptfoo Cloud
+    - id: "base64"            
+    - id: "leetspeak"         
+
+# Use Google Gemini as the red team attacker (requires GOOGLE_API_KEY in .env)
+# This saves your OpenAI credits for the target application itself.
+defaultTest:
+  provider: "ollama:chat:gemma4:31b-cloud"

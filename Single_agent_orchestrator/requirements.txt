@@ -1,0 +1,12 @@
+google-generativeai
+pyyaml
+jinja2
+pandas
+ipykernel
+ollama
+openai
+python-dotenv
+pyrit
+garak
+deepteam
+sqlitesearch

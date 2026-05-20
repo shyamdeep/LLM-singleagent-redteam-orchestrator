@@ -1,0 +1,9 @@
+.venv
+.env
+faq.db*
+*.db
+*.db-shm
+*.db-wal
+node_modules
+.ipynb_checkpoints/
+__pycache__/

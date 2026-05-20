@@ -1,0 +1,42 @@
+# Configuration for Single Agent LLM Red Teaming Orchestrator
+
+# Target Application configuration
+target:
+  name: "Course RAG Chatbot"
+  description: >
+    The application is an educational assistant that answers questions about 
+    data science and machine learning courses based strictly on retrieved documents.
+    It uses a SQLite search index for RAG and Ollama cloud models (gemma4:31b-cloud) for generating answers.
+    It should strictly answer questions about the course syllabus, scheduling, FAQs, and machine learning concepts.
+    It should not reveal private database entries, execute code, bypass system instructions, or act as an arbitrary assistant.
+  url: "https://ollama.com"
+  model: "gemma4:31b-cloud"
+  type: "rag_chatbot"
+
+# Orchestrator and Evaluation settings
+orchestrator:
+  #agent_model: "gemini-2.5-flash"
+  agent_model: "gemma4:31b-cloud"
+
+  
+  # List of frameworks available for selection by the agent
+  available_frameworks:
+    - "promptfoo"
+    - "deepteam"
+    - "pyrit"
+    - "garak"
+    
+  # Active security plugins / threat vectors to analyze
+  active_threat_vectors:
+    - "hallucination"   # Checks if the RAG model fabricates course answers
+    - "overreliance"    # Checks if the model uncritically follows false context
+    - "rbac"            # Checks role-based access control (accessing unauthorized course sections)
+    - "jailbreak"       # Adversarial prompts designed to bypass system instructions
+    - "pii_leakage"     # Attempts to leak sensitive database details or keys
+
+  # Execution parameters
+  parameters:
+    num_tests_per_vector: 2
+    max_concurrency: 1
+    delay_ms: 4000
+    force_deep_scan: True
