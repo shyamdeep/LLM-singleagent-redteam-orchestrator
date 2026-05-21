@@ -15,8 +15,9 @@ target:
 
 # Orchestrator and Evaluation settings
 orchestrator:
-  #agent_model: "gemini-2.5-flash"
-  agent_model: "gemma4:31b-cloud"
+  # agent_model: "gemini-2.5-flash"
+  # agent_model: "gemma4:31b-cloud"
+  agent_model: "gemini-3.5-flash"
 
   
   # List of frameworks available for selection by the agent
@@ -39,4 +40,4 @@ orchestrator:
     num_tests_per_vector: 2
     max_concurrency: 1
     delay_ms: 4000
-    force_deep_scan: True
+    force_deep_scan: False
